@@ -15,7 +15,6 @@
 - baseBorder 를 선언해놓고 copyWith 로 복사해서 사용하고, 필요한 속성만 다시 수정하는 방법으로 UI 를 만들어야 한다.
 
     ```
-
         const baseBorder = OutlineInputBorder(
             borderSide: BorderSide(
                 color: INPUT_BORDER_COLOR,
@@ -102,12 +101,14 @@
 - 기본적으로 로그인 할때 Basic userid:password 를 header 에 담아 요청한다.
 - 토큰을 사용하는 인증은 Bearer token 을 header 에 담아 요청한다.
 - base64 로 encode 하는 부분은 공통 유틸로 빼서 사용하면 편하다.
+
     ```
         const rawString = 'test@codefactory.ai:testtest';
         Codec<String, String> stringToBase64 = utf8.fuse(base64);
         String token = stringToBase64.encode(rawString);
     ```
 - dio 의 option 속성에 header 관련 정보를 추가할수 있다.
+
     ```
         final resp = await dio.post(
             'http://$ip/auth/login',
@@ -120,3 +121,59 @@
 ## 2. 간단한 로그인 시스템 만들어보기
 
 - 기존에 하드코딩 되어있던 부분을 username 과 password 변수를 만들어서 로그인에 사용하도록 변경하였다.
+
+## 3. SplashScreen 구현해보기
+
+- 로그인 성공 후 토큰 정보를 flutter secure storage 에 저장한다.
+
+    ```
+        // const/data.dart 에 토큰 변수 및 storage 생성
+
+        const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
+        const REFRESH_TOKEN_KEY = 'REFRESH_TOKEN';
+
+        const storage = FlutterSecureStorage();
+
+        // 로그인 완료 후 저장
+
+        final refreshToken = resp.data['refreshToken'];
+        final accessToken = resp.data['accessToken'];
+
+        await storage.write(key: REFRESH_TOKEN_KEY, value: refreshToken);
+        await storage.write(key: ACCESS_TOKEN_KEY, value: accessToken);
+    ```
+
+- SplashScreen 을 만들어서 storage 에 토큰이 저장되어 있는지 확인한다.
+
+    ```
+        void checkToken() async {
+            final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
+            final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+
+            if (refreshToken == null || accessToken == null) {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                    builder: (_) => const LoginScreen(),
+                    ),
+                    (route) => false,
+                );
+            } else {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                    builder: (_) => const RootTab(),
+                ),
+                    (route) => false,
+                );
+            }
+        }
+    ```
+- initState 에선 await 를 사용할수 없으므로 다른 함수를 만들어서 호출해야 한다.
+
+    ```
+        void initState() {
+            super.initState();
+
+            checkToken();
+        }
+    ```
+- SplashScreen 에서 토큰이 있는지 확인 및 토큰 검증 후 화면 이동이 발생하는게 전반적인 앱 흐름이다.
