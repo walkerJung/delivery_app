@@ -9,8 +9,28 @@ class RootTab extends StatefulWidget {
   State<RootTab> createState() => _RootTabState();
 }
 
-class _RootTabState extends State<RootTab> {
+class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
+  late TabController controller;
   int index = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TabController(length: 4, vsync: this);
+    controller.addListener(tabListenr);
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(tabListenr);
+    super.dispose();
+  }
+
+  void tabListenr() {
+    setState(() {
+      index = controller.index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +43,7 @@ class _RootTabState extends State<RootTab> {
         unselectedFontSize: 10,
         type: BottomNavigationBarType.shifting,
         onTap: (int index) {
-          setState(() {
-            this.index = index;
-          });
+          controller.animateTo(index);
         },
         currentIndex: index,
         items: const [
@@ -47,8 +65,15 @@ class _RootTabState extends State<RootTab> {
           )
         ],
       ),
-      child: const Center(
-        child: Text('Root Tab'),
+      child: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: controller,
+        children: [
+          Center(child: Container(child: const Text('홈'))),
+          Center(child: Container(child: const Text('음식'))),
+          Center(child: Container(child: const Text('주문'))),
+          Center(child: Container(child: const Text('프로필'))),
+        ],
       ),
     );
   }

@@ -254,3 +254,53 @@
         },
         currentIndex: index,                    // 선택된 탭의 인덱스
     ```
+
+## 2. TabBarView 생성하기
+
+- TabBarView 는 말그대로 TabBar 를 선택했을때 보이는 화면을 설정하는 위젯이다.
+- TabBarView 위젯의 children 속성에 각 탭에 연결할 화면 위젯들을 추가하는 방식으로 연결한다.
+- TabBarView 를 사용할땐 TabController 가 필요하고, controller 에 이벤트를 바인딩하여 사용한다.
+
+    ```
+        late TabController controller;
+
+        @override
+        void initState() {
+            super.initState();
+            controller = TabController(length: 4, vsync: this);
+            controller.addListener(tabListenr);
+        }
+
+        @override
+        void dispose() {
+            controller.removeListener(tabListenr);
+            super.dispose();
+        }
+
+        void tabListenr() {
+            setState(() {
+                index = controller.index;
+            });
+        }
+    ```
+- 에니메이션과 관련된 controller 를 사용할때 vsync 를 인자로 받는경우가 있는데 이럴땐 무조건 SingleTickerProviderStateMixin 을 with 로 추가해주고 vsync 인자에는 this 를 넘겨준다.
+
+    ```
+        class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin
+    ```
+- BottomNavigationBar 의 onTap 속성의 콜백함수에 controller 의 animateTo() 메서드를 사용하여 화면전환이 가능하도록 한다.
+
+    ```
+       onTap: (int index) {
+          controller.animateTo(index);
+        }, 
+    ```
+- TabBar 클릭 시 변경되는 이벤트는 controller 의 addListenr() 메서드를 사용하여 BottomNavigationBar 에서 참조하고있는 index 값을 controller 의 index 값으로 변경시켜준다.
+- TabBarView 의 physics 속성을 설정하면 스와이프 기능이 안되도록 막을수 있다.
+
+    ```
+        TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            ...
+        )
+    ```
