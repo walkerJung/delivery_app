@@ -42,4 +42,41 @@
             ),
         )
     ```
-- 
+## 3. UI 배치하기
+
+- Image.asset() 을 사용해서 asset 에 등록한 이미지를 불러올수 있다.
+- pubspect.yaml 에 font 를 등록하고 MaterialApp 의 theme 속성에 font 를 추가할수 있다.
+
+    ```
+        theme: ThemeData(
+          fontFamily: 'NotoSans',
+        ),
+    ```
+- default_layout.dart 는 Scaffold 에 전달받은 child 를 그려주는 역할을 하는데 전체 스크린에 추가되어야할 로직이 있을때 default_layout.dart 만 수정하면 되기때문에 생산성에 도움을 준다.
+
+    ```
+        // 로그인 스크린의 return 을 DefaultLayout 에 child 를 넘겨주는 식으로 구현
+
+        class LoginScreen extends StatelessWidget {
+
+            ...
+
+            @override
+            Widget build(BuildContext context) {
+                return DefaultLayout(
+                    child: ...
+                )
+            }
+
+
+        }
+    ```
+- MediaQuery 를 사용해서 width 값을 조정하면 편리하다
+
+    ```
+        Image.asset(
+            'asset/img/misc/logo.png',
+            width: MediaQuery.of(context).size.width / 3 * 2,
+        ),
+    ```
+- Text 위젯 내에서 \n 을 사용하면 줄바꿈을 할수 있다.
