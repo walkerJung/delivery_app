@@ -23,7 +23,7 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     const baseBorder = OutlineInputBorder(
       borderSide: BorderSide(
-        color: Colors.red,
+        color: INPUT_BORDER_COLOR,
         width: 1.0,
       ),
     );

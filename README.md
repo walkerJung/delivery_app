@@ -94,3 +94,25 @@
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag
         )
     ```
+
+# Authentication
+
+## 1. Dio 로 Auth API 요청해보기
+
+- 기본적으로 로그인 할때 Basic userid:password 를 header 에 담아 요청한다.
+- 토큰을 사용하는 인증은 Bearer token 을 header 에 담아 요청한다.
+- base64 로 encode 하는 부분은 공통 유틸로 빼서 사용하면 편하다.
+    ```
+        const rawString = 'test@codefactory.ai:testtest';
+        Codec<String, String> stringToBase64 = utf8.fuse(base64);
+        String token = stringToBase64.encode(rawString);
+    ```
+- dio 의 option 속성에 header 관련 정보를 추가할수 있다.
+    ```
+        final resp = await dio.post(
+            'http://$ip/auth/login',
+            options: Options(
+                headers: {'authorization': 'Basic $token'},
+            ),
+        );
+    ```
