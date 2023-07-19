@@ -12,7 +12,8 @@
 - TextFormField 의 obscureText 속성을 설정하면 비밀번호 입력 시 * 로 표현된다.
 - TextFormField 의 autofocus 속성을 설정하면 화면에 해당 위젯이 나오면 자동으로 focus 시킬수 있다.
 - TextFormField 의 decoration 속성에 InputDecoration() 를 사용하면 다양한 UI 설정을 할수 있다.
-- baseBorder 를 선언해놓고 copyWith 로 복사해서 사용하고, 필요한 속성만 다시 수정하는 방법으로 UI 를 만들어야 한다. 
+- baseBorder 를 선언해놓고 copyWith 로 복사해서 사용하고, 필요한 속성만 다시 수정하는 방법으로 UI 를 만들어야 한다.
+
     ```
 
         const baseBorder = OutlineInputBorder(
@@ -80,3 +81,16 @@
         ),
     ```
 - Text 위젯 내에서 \n 을 사용하면 줄바꿈을 할수 있다.
+
+## 4. UI 마무리하기
+
+- TextFormField 의 enabledBorder 속성을 설정하면 사용할수 있는 상태일때만 border 설정이 적용된다.
+- 스크롤이 필요한 스크린은 SingleChildScrollView 로 감싸주고 SingleChildScrollView 의 keyboardDismissBehavior 속성을 설정하면 동작에 따라 키보드가 사라지게 할수 있다.
+
+    ```
+        // 스크롤 시 키보드 사라짐
+
+        SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag
+        )
+    ```
