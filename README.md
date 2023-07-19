@@ -94,6 +94,7 @@
         )
     ```
 
+
 # Authentication
 
 ## 1. Dio 로 Auth API 요청해보기
@@ -177,3 +178,79 @@
         }
     ```
 - SplashScreen 에서 토큰이 있는지 확인 및 토큰 검증 후 화면 이동이 발생하는게 전반적인 앱 흐름이다.
+
+
+# Pagination
+
+## 1. AppBar 와 TabBar 만들기
+
+- DefaultLayout 에 title, bottomNavigationBar 속성을 추가한다.
+
+    ```
+        final String? title;
+        final Widget? bottomNavigationBar;
+    ```
+- Scaffold 위젯의 appBar, bottomNavigationBar 속성을 사용해 AppBar 와 TabBar 를 구현할수 있다.
+- appBar 속성은 AppBar 를 return 하는 renderAppBar 함수를 만들어서 사용하면 편하다.
+
+    ```
+        AppBar? renderAppBar() {
+            if (title == null) {
+                return null;
+            } else {
+                return AppBar(
+                    backgroundColor: Colors.white,
+                    elevation: 0,
+                    title: Text(
+                        title!,
+                        style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                        ),
+                    ),
+                    foregroundColor: Colors.black,
+                );
+            }
+        }
+    ```
+- bottomNavigationBar 속성은 DefaultLayout 을 사용하는 위젯에서 설정할수 있도록 구현하면 편하다.
+
+    ```        
+        // items 는 2개 이상부터 사용 가능
+
+        bottomNavigationBar: BottomNavigationBar(
+            items: const[
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.home_outlined),
+                    label: '홈',
+                ),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.fastfood_outlined),
+                    label: '음식',
+                ),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.receipt_long_outlined),
+                    label: '주문',
+                ),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.person_outline),
+                    label: '프로필',
+                )
+            ]
+        )
+    ```
+- BottomNavigationBar() 의 속성을 사용하여 디자인을 변경할수 있다.
+
+    ```
+        selectedItemColor: PRIMARY_COLOR,       // 탭 선택 시 color
+        unselectedItemColor: BODY_TEXT_COLOR,   // 선택 안된 탭 color
+        selectedFontSize: 10,                   // 탭 선택 시 fontsize
+        unselectedFontSize: 10,                 // 선택 안된 탭 fontsize
+        type: BottomNavigationBarType.shifting, // 선택 되었을때의 에니메이션 (shifting 은 선택된 탭이 점유하는 공간이 살짝 넒어짐)
+        onTap: (int index) {                    // 탭 선택 시 callback function
+          setState(() {
+            this.index = index;
+          });
+        },
+        currentIndex: index,                    // 선택된 탭의 인덱스
+    ```
