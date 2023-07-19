@@ -1,12 +1,18 @@
 # 기본 UI 작업하기
 
 ## 1. 색상 상수 지정하기
+<details>
+<summary> 내용 보기</summary>
 
 - 폴더구조는 기능에 따라 나눈다.
 - lib/common 을 만들어서 기능에 상관없이 공통으로 쓰는 부분을 정의한다.
 - lib/common/const 에 colors.dart 파일을 만들어서 앱에 사용할 색상을 미리 정의한다.
 
+</details>
+
 ## 2. 텍스트필드 디자인하기
+<details>
+<summary> 내용 보기</summary>
 
 - TextFormField 의 cursorColor 속성을 설정하면 깜빡이는 커서의 색상을 변경할수 있다.
 - TextFormField 의 obscureText 속성을 설정하면 비밀번호 입력 시 * 로 표현된다.
@@ -42,7 +48,11 @@
             ),
         )
     ```
+</details>
+
 ## 3. UI 배치하기
+<details>
+<summary> 내용 보기</summary>
 
 - Image.asset() 을 사용해서 asset 에 등록한 이미지를 불러올수 있다.
 - pubspect.yaml 에 font 를 등록하고 MaterialApp 의 theme 속성에 font 를 추가할수 있다.
@@ -80,8 +90,11 @@
         ),
     ```
 - Text 위젯 내에서 \n 을 사용하면 줄바꿈을 할수 있다.
+</details>
 
 ## 4. UI 마무리하기
+<details>
+<summary> 내용 보기</summary>
 
 - TextFormField 의 enabledBorder 속성을 설정하면 사용할수 있는 상태일때만 border 설정이 적용된다.
 - 스크롤이 필요한 스크린은 SingleChildScrollView 로 감싸주고 SingleChildScrollView 의 keyboardDismissBehavior 속성을 설정하면 동작에 따라 키보드가 사라지게 할수 있다.
@@ -93,11 +106,14 @@
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag
         )
     ```
-
+</details>
+<br/><br/>
 
 # Authentication
 
 ## 1. Dio 로 Auth API 요청해보기
+<details>
+<summary> 내용 보기</summary>
 
 - 기본적으로 로그인 할때 Basic userid:password 를 header 에 담아 요청한다.
 - 토큰을 사용하는 인증은 Bearer token 을 header 에 담아 요청한다.
@@ -118,12 +134,18 @@
             ),
         );
     ```
+</details>
 
 ## 2. 간단한 로그인 시스템 만들어보기
+<details>
+<summary> 내용 보기</summary>
 
 - 기존에 하드코딩 되어있던 부분을 username 과 password 변수를 만들어서 로그인에 사용하도록 변경하였다.
+</details>
 
 ## 3. SplashScreen 구현해보기
+<details>
+<summary> 내용 보기</summary>
 
 - 로그인 성공 후 토큰 정보를 flutter secure storage 에 저장한다.
 
@@ -178,11 +200,15 @@
         }
     ```
 - SplashScreen 에서 토큰이 있는지 확인 및 토큰 검증 후 화면 이동이 발생하는게 전반적인 앱 흐름이다.
+</details>
 
+<br/><br/>
 
 # Pagination
 
 ## 1. AppBar 와 TabBar 만들기
+<details>
+<summary> 내용 보기</summary>
 
 - DefaultLayout 에 title, bottomNavigationBar 속성을 추가한다.
 
@@ -254,8 +280,11 @@
         },
         currentIndex: index,                    // 선택된 탭의 인덱스
     ```
+</details>
 
 ## 2. TabBarView 생성하기
+<details>
+<summary> 내용 보기</summary>
 
 - TabBarView 는 말그대로 TabBar 를 선택했을때 보이는 화면을 설정하는 위젯이다.
 - TabBarView 위젯의 children 속성에 각 탭에 연결할 화면 위젯들을 추가하는 방식으로 연결한다.
@@ -304,3 +333,6 @@
             ...
         )
     ```
+- controller 를 사용할때 late 로 변수를 생성해주고 initState 에서 할당해주고, 꼭 dispose 도 해줘야한다.
+- TabController 는 TabBar 와 TabBarView 를 관리하는 컨트롤러 이다.
+</details>
