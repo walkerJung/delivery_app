@@ -445,3 +445,26 @@
 ## 1. JSON 데이터 매핑하기
 
 - 개발 편의성을 위해 Future 타입의 response.data 를 모델의 인스턴스로 파싱하는 작업이 필요하다.
+
+## 2. fromJson 생성자 만들어보기
+
+- Dart 에서 Json 의 형식은 Map<String, dynamic> 이다
+- factory 생성자를 사용해서 fromJson 생성자를 만들고 response.data 를 넘겨받아서 데이터를 인스턴스화 시킨다.
+
+```
+    factory RestaurantModel.fromJson({required Map<String, dynamic> json}) {
+        return RestaurantModel(
+            id: json['id'],
+            name: json['name'],
+            thumbUrl: 'http://$ip${json['thumbUrl']}',
+            tags: List<String>.from(json['tags']),
+            priceRange: RestaurantPriceRange.values.firstWhere(
+                (e) => e.name == json['priceRange'],
+            ),
+            ratings: json['ratings'],
+            ratingsCount: json['ratingsCount'],
+            deliveryTime: json['deliveryTime'],
+            deliveryFee: json['deliveryFee'],
+        );
+  }
+```
