@@ -569,3 +569,13 @@
         ),
     ```
 </details>
+
+## 3. SliverList 구현하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 하나의 스크린에서 두개의 스크롤 가능한 리스트가 있을때 CustomScrollView 를 사용한다.
+- CustomScrollView 의 slivers 속성에 들어가는 위젯들은 대부분 Slivers 로 시작한다.
+- SliverList 위젯의 delegate 속성을 사용하여 빌더로 랜더(화면에 보이는것들만 랜더) 할건지 children 형태로 랜더 할것인지 고를수 있다.
+</details>
