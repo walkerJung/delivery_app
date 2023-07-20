@@ -443,11 +443,20 @@
 # 데이터 모델링
 
 ## 1. JSON 데이터 매핑하기
+<details>
+<summary> 내용 보기</summary>
+<br>
 
 - 개발 편의성을 위해 Future 타입의 response.data 를 모델의 인스턴스로 파싱하는 작업이 필요하다.
 
-## 2. fromJson 생성자 만들어보기
+</details>
 
+## 2. fromJson 생성자 만들어보기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- fromJson 생성자는 json 으로부터 데이터 모델링 및 인스턴스화 시키는걸 의미한다.
 - Dart 에서 Json 의 형식은 Map<String, dynamic> 이다
 - factory 생성자를 사용해서 fromJson 생성자를 만들고 response.data 를 넘겨받아서 데이터를 인스턴스화 시킨다.
 
@@ -468,3 +477,52 @@
         );
   }
 ```
+</details>
+
+## 3. fromModel 생성자 만들어보기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- fromModel 생성자는 인스턴스화 된 model 로부터 데이터 모델링 및 인스턴스화 시키는걸 의미한다.
+- fromJson 을 통해 인스턴스화 된 model 을 전달받아 factory 생성자를 사용해서 랜더링 할수있도록 인스턴스화 시킨다.
+
+    ```
+        factory RestaurantCard.fromModel({required RestaurantModel model}) {
+            return RestaurantCard(
+                image: Image.network(
+                    model.thumbUrl,
+                    fit: BoxFit.cover,
+                ),
+                name: model.name,
+                tags: model.tags,
+                ratingsCount: model.ratingsCount,
+                deliveryTime: model.deliveryFee,
+                deliveryFee: model.deliveryFee,
+                ratings: model.ratings,
+            );
+        }
+    ```
+- 이러한 패턴으로 개발할때 유지보수성, UI 와 비지니스 로직 분리 등 다양한 이점을 가져갈수 있다.
+
+    ```
+        // 서버 응답 > fromJson 통해서 인스턴스화 > 인스턴스화 된 model 을 fromModel 에서 렌더링 관여 > UI / 비지니스 로직 분리 완료
+
+        return ListView.separated(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (_, index) {
+                final item = snapshot.data![index];
+                final pItem = RestaurantModel.fromJson(json: item);
+                return RestaurantCard.fromModel(
+                model: pItem,
+                );
+            },
+            separatorBuilder: (_, index) {
+                return const SizedBox(
+                height: 16,
+                );
+            },
+        );
+    ```
+</details>
+
