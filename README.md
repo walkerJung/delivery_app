@@ -546,3 +546,26 @@
           ),
     ```
 </details>
+
+## 2. ProductCard 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- Row 위젯 안에 있는 children 위젯들은 필요한 만큼 각각의 고유한 높이를 점유한다.
+- 최대한 높이를 점유하게 하려면 IntrinsicHeight 위젯으로 감싸줘야 한다.
+- 최대한 넓이를 점유하게 하려면 IntrinsicWidth 위젯으로 감싸줘야 한다.
+- Text 위젯의 maxLines 과 overflow 속성을 설정하면 말 줄임표를 붙일수 있다.
+
+    ```
+        Text(
+            '전통 떡볶이의 정석!\n맛있습니다!',
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+            style: TextStyle(
+                color: BODY_TEXT_COLOR,
+                fontSize: 14,
+            ),
+        ),
+    ```
+</details>
