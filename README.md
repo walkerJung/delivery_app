@@ -577,5 +577,48 @@
 
 - 하나의 스크린에서 두개의 스크롤 가능한 리스트가 있을때 CustomScrollView 를 사용한다.
 - CustomScrollView 의 slivers 속성에 들어가는 위젯들은 대부분 Slivers 로 시작한다.
-- SliverList 위젯의 delegate 속성을 사용하여 빌더로 랜더(화면에 보이는것들만 랜더) 할건지 children 형태로 랜더 할것인지 고를수 있다.
+- SliverList 위젯의 delegate 속성을 사용하여 빌더로 랜더( 화면에 보이는것들만 랜더 ) 할건지 children 형태로 랜더 할것인지 고를수 있다.
+</details>
+
+## 4. 레스토랑 상세요청 구현하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 상세정보는 List 가 아닌 Map 형식의 response 를 받는다.
+- api response -> RestaurantDetailModel.fromJson 으로 인스턴스화 -> RestaurantDetailModel 은 RestaurantModel 을 상속받았으므로 RestaurantModel 의 형식도 가진다. -> RestaurantCard.fromModel 로 인스턴스화 시키면서 랜더링 한다.
+- 중복되는 데이터 모델링은 ( 예를 들어 리스트와 상세보기 관계 ) 자식 클래스에서 부모 클래스를 상속받아서 구현하면 깔끔하다.
+- List 형식의 속성이 있다면 그 형식의 model 을 추가하면 깔끔하다.
+
+    ```
+        class RestaurantProductModel {
+            final String id;
+            final String name;
+            final String imgUrl;
+            final String detail;
+            final int price;
+
+            RestaurantProductModel({
+                required this.id,
+                required this.name,
+                required this.imgUrl,
+                required this.detail,
+                required this.price,
+            });
+        }
+
+        ...
+
+        products: json['products']
+          .map<RestaurantProductModel>(
+            (x) => RestaurantProductModel(
+              id: x['id'],
+              name: x['name'],
+              imgUrl: x['imgUrl'],
+              detail: x['detail'],
+              price: x['price'],
+            ),
+          )
+          .toList(),
+    ```
 </details>
