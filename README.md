@@ -526,3 +526,23 @@
     ```
 </details>
 
+<br/><br/>
+
+# RestaurantDetailScreen 작업하기
+
+## 1. 레스토랑 상세페이지 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 위젯 안에서 if문을 쓰면 바로 아래만 적용된다.
+
+    ```
+        if (isDetail) image,
+        if (!isDetail)
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: image,
+          ),
+    ```
+</details>
