@@ -622,3 +622,12 @@
           .toList(),
     ```
 </details>
+
+## 5. ProductCard 매핑하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- json 으로 부터 데이터 매핑이 필요하면 fromJson 생성자를 만들어서 인스턴스화 시키면 좋다.
+- model 로 부터 데이터 매핑이 필요하면 fromModel 생성자를 만들어서 인스턴스화 시키면 좋다. (fromModel 은 주로 랜더링에서 사용)
+</details>
