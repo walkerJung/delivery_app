@@ -345,3 +345,38 @@
 - controller 를 사용할때 late 로 변수를 생성해주고 initState 에서 할당해주고, 꼭 dispose 도 해줘야한다.
 - TabController 는 TabBar 와 TabBarView 를 관리하는 컨트롤러 이다.
 </details>
+
+## 3. RestaurantCard 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- restaurant_screen.dart 를 만들어서 TabVarBiew 의 인자로 넘겨준다.
+- Image.asset() 을 사용할때 fit 속성을 사용하면 이미지가 어떻게 랜더링 될지 설정할수 있다.
+
+    ```
+        Image.asset(            
+            'asset/img/food/ddeok_bok_gi.jpg',
+            fit: BoxFit.cover,
+        )
+    ```
+- List 형식의 데이터에 join 메서드를 사용하면 리스트를 순회하며 구분자를 넣어준다.
+
+    ```
+        Text(
+            tags.join(' · '),
+            style: const TextStyle(
+                color: BODY_TEXT_COLOR,
+                fontSize: 14,
+            ),
+        ),
+    ```
+- ClipRrect 위젯을 사용하여 child 에 image 를 전달하면 image 에 border 효과를 줄수 있다.
+
+    ```
+       ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: image,
+        ), 
+    ```
+</details>
