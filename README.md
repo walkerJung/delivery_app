@@ -437,3 +437,11 @@
         tags: List<String>.from(item['tags'])
     ```
 </details>
+
+<br/><br/>
+
+# 데이터 모델링
+
+## 1. JSON 데이터 매핑하기
+
+- 개발 편의성을 위해 Future 타입의 response.data 를 모델의 인스턴스로 파싱하는 작업이 필요하다.

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:delivery_app/common/components/custom_text_form_field.dart';
+import 'package:delivery_app/common/component/custom_text_form_field.dart';
 import 'package:delivery_app/common/const/colors.dart';
 import 'package:delivery_app/common/const/data.dart';
 import 'package:delivery_app/common/layout/default_layout.dart';
