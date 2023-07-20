@@ -380,3 +380,12 @@
         ), 
     ```
 </details>
+
+## 4. Refresh Token 확인 로직
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- splash_screnn.dart 에서 try catch 를 사용해서 refresh token 으로 api call 이 가능한지 확인하는 로직을 추가했다.
+
+</details>
