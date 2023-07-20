@@ -389,3 +389,51 @@
 - splash_screnn.dart 에서 try catch 를 사용해서 refresh token 으로 api call 이 가능한지 확인하는 로직을 추가했다.
 
 </details>
+
+## 4. Restaurant Pagination 요청해보기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- splash_screen.dart 에서 checkToken() 함수 내에 refreshToken 으로 accessToken 을 재발급 해서 storage 에 넣는 로직을 추가하였다.
+- Future 를 return 하는 함수에서 api call 을 하고 FutureBuilder 의 future 속성에 전달해서 ListView 를 완성했다.
+
+    ```
+        Future<List> paginateRestaurant() async {
+            final dio = Dio();
+
+            final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+
+            final resp = await dio.get(
+                'http://$ip/restaurant',
+                options: Options(
+                    headers: {'authorization': 'Bearer $accessToken'},
+                ),
+            );
+
+            return resp.data['data'];
+        }
+
+        FutureBuilder(
+            future: paginationRestaurant(),
+            builder: ...
+        )        
+    ```
+- ListView.separated 를 사용해서 각 item 사이에 구분자(SizedBox) 를 추가하였다.
+
+    ```
+        ListView.separated(
+            ...
+            separatorBuilder: (_, index) {
+                return const SizedBox(
+                    height: 16,
+                );
+            },
+        )
+    ```
+- dynamic 관련 에러가 뜨는경우 형변환을 해줄수있다
+
+    ```
+        tags: List<String>.from(item['tags'])
+    ```
+</details>
