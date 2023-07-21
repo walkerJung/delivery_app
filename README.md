@@ -863,3 +863,13 @@
         class CursorPaginationModel<T> {}
     ```
 </details>
+
+## 6. Pagination UI 에 적용해보기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- retrofit 에서 만든 repository 는 항상 fromJson 까지 파싱해준다는걸 잊지말자.
+
+</details>
+
