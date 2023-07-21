@@ -632,6 +632,8 @@
 - model 로 부터 데이터 매핑이 필요하면 fromModel 생성자를 만들어서 인스턴스화 시키면 좋다. (fromModel 은 주로 랜더링에서 사용)
 </details>
 
+<br><br>
+
 # JsonSerializable과 Retrofit 그리고 Dio Interceptor
 
 ## 1. RestaurantModel에 JsonSerializable 적용해보기
@@ -673,5 +675,39 @@
             return 'http://$ip$value';
         }
 
+    ```
+</details>
+
+## 2. RestaurantDetailModel에 JsonSerializable 적용해보기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- part 'restaurant_detail_model.g.dart'; 를 추가한다.
+
+    ```
+        part 'restaurant_detail_model.g.dart';
+    ```
+- class 바로 위에 데코레이터를 추가한다.
+
+    ```
+        @JsonSerializable()
+        class RestaurantDetailModel extends RestaurantModel {
+            final List<RestaurantProductModel> products;
+            ...
+        }
+    ```
+- 인스턴스화 시킬때 다른 클래스의 형식을 참조하는 속성이 있다면 그 클래스도 JsonSerializable 을 해준다.
+
+    ```
+        @JsonSerializable()
+        class RestaurantProductModel {}
+    ```
+- @JsonKey 내부에서 자주사용하게 되는 함수는 common/utils/data_utils.dart 로 빼서 사용하자.
+
+    ```
+        @JsonKey(
+            fromJson: DataUtils.pathToUrl,
+        )
     ```
 </details>
