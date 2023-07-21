@@ -711,3 +711,46 @@
         )
     ```
 </details>
+
+## 3. Restaurant Repository 구현하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 코드 제너레이터 사용을 위해 restaurant_repository.dart 를 만들고 part 를 작성한다.
+- @RestApi() 데코레이터를 추가해주고, repository 클래스는 abstract 로 선언한다.
+
+    ```
+        part 'restaurant_repository.g.dart';
+
+        @RestApi()
+        abstract class RestaurantRepository {}
+    ```
+- 코드 제너레이터가 만들어준 _RestaurantRepository 를 factory 로 선언한다.
+
+    ```
+        factory RestaurantRepository(Dio dio, {String baseUrl}) = _RestaurantRepository;
+    ```
+
+- abstract 클래스 이므로 필요한 api 함수들의 body 는 선언하지 않는다.
+- Future 와 어떤 model 의 형식 인지 제네릭 안에 넣어준다.
+
+    ```
+        @GET('/{id}')
+        Future<RestaurantDetailModel> getRestaurantDetail({
+            @Path() required String id,
+        });
+    ```
+- repository 를 만들고 메서드를 호출하면 api response 가 fromJson 으로 파싱된후 return 된다.
+
+    ```
+        Future<RestaurantDetailModel> getRestaurantDetail() async {
+            final dio = Dio();
+
+            final repository =
+                RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant');
+
+            return repository.getRestaurantDetail(id: id);
+        }
+    ```
+</details>
