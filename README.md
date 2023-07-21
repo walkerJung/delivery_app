@@ -754,3 +754,55 @@
         }
     ```
 </details>
+
+## 4. Dio onRequest Interceptor 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- Dio 의 Interceptor 를 사용하면 다양한 편의기능을 추가할수 있다.
+- common/dio/dio.dart 에 CustomInterceptor 를 만들고 dio 의 Interceptor 를 상속받는다.
+
+    ```
+        class CustomInterceptor extends Interceptor {}
+    ```
+- onRequest 메서드는 api request 를 보내기 전에 실행되는 인터셉터이다.
+- retrofit 의 @Headers 어노테이션에 전달한 map 을 interceptor 의 options 에서 확인할수 있다.
+
+    ```
+        @GET('/{id}')
+        @Headers({'accessToken': 'true'})
+        Future<RestaurantDetailModel> getRestaurantDetail({
+            @Path() required String id,
+        });
+
+        ...
+
+        @override
+        void onRequest(
+            RequestOptions options,
+            RequestInterceptorHandler handler,
+        ) async {
+            if (options.headers['accessToken'] == 'true') {
+                options.headers.remove('accessToken');
+
+                final token = await storage.read(key: ACCESS_TOKEN_KEY);
+
+                options.headers.addAll({'authorization': 'Bearer $token'});
+            }
+
+            if (options.headers['refreshToken'] == 'true') {
+                options.headers.remove('refreshToken');
+
+                final token = await storage.read(key: REFRESH_TOKEN_KEY);
+
+                options.headers.addAll({'authorization': 'Bearer $token'});
+            }
+
+            return super.onRequest(options, handler);
+        }
+    ```
+- api request 에 accessToken 이 필요한 repository 에서는 {'accessToken' : 'true'} 를 추가해준다.
+- api request 에 refreshToken 이 필요한 repository 에서는 {'refreshToken' : 'true'} 를 추가해준다.
+- api request 를 보내기 전에 onRequest 메서드가 실행되어 storage 의 토큰값을 {'authorization' : 'Bearer $token'} 형식으로 넣어준다.
+</details>
