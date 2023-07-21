@@ -631,3 +631,47 @@
 - json 으로 부터 데이터 매핑이 필요하면 fromJson 생성자를 만들어서 인스턴스화 시키면 좋다.
 - model 로 부터 데이터 매핑이 필요하면 fromModel 생성자를 만들어서 인스턴스화 시키면 좋다. (fromModel 은 주로 랜더링에서 사용)
 </details>
+
+# JsonSerializable과 Retrofit 그리고 Dio Interceptor
+
+## 1. RestaurantModel에 JsonSerializable 적용해보기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- JsonSerializable 는 코드 제너레이터 로써 fromJson, toJson 과 간단한 속성 변경에 도움을 주는 의존성 도구이다.
+- https://github.com/google/json_serializable.dart/tree/master/example
+- flutter pub run build_runner build 는 1회성 실행 CLI 이다.
+- flutter pub run build_runner watch 는 변경사항이 생길시 자동으로 빌드를 해주는 CLI 이다.
+- 기본적인 사용법은 모델 위에 @JsonSerializable() 데코레이터를 추가해주면 된다.
+
+    ```
+       @JsonSerializable()
+        class RestaurantModel {}
+    ```
+- factory 패턴을 사용하여 기존의 fromJson 과 같은 JsonSerializable 가 만들어둔 fromJson 을 return 해주는 방식으로 사용한다.
+
+    ```
+       part 'restaurant_model.g.dart';
+
+       factory RestaurantModel.fromJson(Map<String, dynamic> json) => _$RestaurantModelFromJson(json); 
+    ```
+- JsonSerializable 가 생성한 코드는 _$ + 모델명 + FromJson or ToJson 의 네이밍으로 생성된다.
+- 일부 속성중에서 변경해야 할 속성이 있다면 변경할 속성 바로 위에 @JsonKey 데코레이터를 추가해서 변경할수 있다.
+
+    ```
+        // pathToUrl 의 value 파라미터에 thumbUrl 이 들어간다.
+
+        @JsonKey(
+            fromJson: pathToUrl,
+        )
+        final String thumbUrl;
+
+        ...
+
+        static pathToUrl(String value) {
+            return 'http://$ip$value';
+        }
+
+    ```
+</details>
