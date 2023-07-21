@@ -645,7 +645,7 @@
 - https://github.com/google/json_serializable.dart/tree/master/example
 - flutter pub run build_runner build 는 1회성 실행 CLI 이다.
 - flutter pub run build_runner watch 는 변경사항이 생길시 자동으로 빌드를 해주는 CLI 이다.
-- 기본적인 사용법은 모델 위에 @JsonSerializable() 데코레이터를 추가해주면 된다.
+- 기본적인 사용법은 모델 위에 @JsonSerializable() 어노테이션을 추가해주면 된다.
 
     ```
        @JsonSerializable()
@@ -659,7 +659,7 @@
        factory RestaurantModel.fromJson(Map<String, dynamic> json) => _$RestaurantModelFromJson(json); 
     ```
 - JsonSerializable 가 생성한 코드는 _$ + 모델명 + FromJson or ToJson 의 네이밍으로 생성된다.
-- 일부 속성중에서 변경해야 할 속성이 있다면 변경할 속성 바로 위에 @JsonKey 데코레이터를 추가해서 변경할수 있다.
+- 일부 속성중에서 변경해야 할 속성이 있다면 변경할 속성 바로 위에 @JsonKey 어노테이션을 추가해서 변경할수 있다.
 
     ```
         // pathToUrl 의 value 파라미터에 thumbUrl 이 들어간다.
@@ -688,7 +688,7 @@
     ```
         part 'restaurant_detail_model.g.dart';
     ```
-- class 바로 위에 데코레이터를 추가한다.
+- class 바로 위에 어노테이션을 추가한다.
 
     ```
         @JsonSerializable()
@@ -718,7 +718,7 @@
 <br>
 
 - 코드 제너레이터 사용을 위해 restaurant_repository.dart 를 만들고 part 를 작성한다.
-- @RestApi() 데코레이터를 추가해주고, repository 클래스는 abstract 로 선언한다.
+- @RestApi() 어노테이션을 추가해주고, repository 클래스는 abstract 로 선언한다.
 
     ```
         part 'restaurant_repository.g.dart';
@@ -805,4 +805,41 @@
 - api request 에 accessToken 이 필요한 repository 에서는 {'accessToken' : 'true'} 를 추가해준다.
 - api request 에 refreshToken 이 필요한 repository 에서는 {'refreshToken' : 'true'} 를 추가해준다.
 - api request 를 보내기 전에 onRequest 메서드가 실행되어 storage 의 토큰값을 {'authorization' : 'Bearer $token'} 형식으로 넣어준다.
+</details>
+
+## 4. Dio onError Interceptor 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- interceptor 의 onError 메서드를 사용하면 에러 핸들링을 할수 있다.
+- err 에는 에러에 대한 정보, handler 는 이 에러를 reject, resolve 로 핸들링 할수 있다.
+
+    ```
+        return handler.reject(err);         // 에러 발생
+        return handler.resolve(response);   // 에러 해결 후 에러 없던것처럼 Resolve
+    ```
+- storage 에 refreshToken 이 없다면 에러 발생
+- 401 에러가 맞고 (err.response?.statusCode == 401) refreshToken 을 발급받으려던게 아니라면
+- try catch 에서 accessToken 재발급 후
+- 에러가 발생한 requestOption 의 header 에 새로 발급한 accessToken 넣어주기
+
+    ```
+        final accessToken = resp.data['accessToken'];
+        final options = err.requestOptions;
+
+        options.headers.addAll(
+          {
+            'authorization': 'Bearer $accessToken',
+          },
+        );
+    ```
+- storage 에 다시 저장 ( 다른 api request 에서 onRequest 가 먼저 실행되기 때문에 토큰 최신화 )
+- accessToken 정보를 수정한 options 로 다시 fetch 후 결과 return
+
+    ```
+        final response = await dio.fetch(options);
+        return handler.resolve(response);
+    ```
+- 즉 refreshToken 은 유효한데, accessToken 이 만료되었을때 accessToken 을 재발급 하고, 다시 요청하는 로직을 추가한 것이다.    
 </details>
