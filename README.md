@@ -843,3 +843,23 @@
     ```
 - 즉 refreshToken 은 유효한데, accessToken 이 만료되었을때 accessToken 을 재발급 하고, 다시 요청하는 로직을 추가한 것이다.    
 </details>
+
+## 5. Restaurant Pagination API 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- retrofit 과 dio 로 api 통신을 편하게 할수 있다.
+- 즉, JsonSerializable 은 fromJson, toJson 에 대한 코드 제너레이터 역할을 하고
+- retrofit 으로 만든 abstract repository 에서 dio 를 전달받아서 api call 을 하고
+- 그 과정에서 dio 의 intercepter 가 동작하고
+- response 가 있으면 repository 에서 fromJson 으로 파싱 후 return 한다.
+- @JsonSerializable 어노테이션의 genericArgumentFactories 속성을 사용하면 제네릭을 사용할수 있다.
+
+    ```
+        @JsonSerializable(
+            genericArgumentFactories: true,
+        )
+        class CursorPaginationModel<T> {}
+    ```
+</details>
