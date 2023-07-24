@@ -1159,3 +1159,34 @@
         }
     ```
 </details>
+
+## 11. FetchMore 로딩 UI 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- builder 가 그려야할 count 에 + 1 을 해준다.
+- data 의 length 와 builder 의 index 가 같을때 로딩 UI 를 보여준다.
+
+    ```
+        ListView.separated(
+        controller: controller,
+        itemCount: cp.data.length + 1,
+        itemBuilder: (_, index) {
+          if (index == cp.data.length) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 8,
+              ),
+              child: Center(
+                child: data is CursorPaginationFetchingMore
+                    ? const CircularProgressIndicator()
+                    : const Text('마지막 데이터 입니다.'),
+              ),
+            );
+          }
+
+        ...
+    ```
+</details>
