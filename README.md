@@ -1063,3 +1063,47 @@
         }
     ```
 </details>
+
+## 9. Restaurant Pagination - 4
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 데이터를 더 가지고 와야하는 상황의 로직을 추가하였다.
+- 몇개씩 더 가지고올지는 아직 모르니 PaginationParams 의 count 에 fetchCount 를 전달한다.
+- fetchMore 이 true 인 경우는 데이터를 한번 불러온 상태이므로 state 에서 마지막 데이터를 참조할수 있다.
+- 기존 PaginationParams 를 copyWith 함수로 after 속성만 변경한다
+
+    ```
+        if (fetchMore) {
+            final pState = state as CursorPaginationModel;
+
+            state = CursorPaginationFetchingMore(
+                meta: pState.meta,
+                data: pState.data,
+            );
+
+            paginationParams.copyWith(after: pState.data.last.id);
+        }        
+    ```
+- 변경한 paginationParams 또는 변경없는 paginationParams 를 repository.paginate 에 넘긴다.
+
+    ```
+        final resp = await repository.paginate(paginationParams: paginationParams);
+    ```
+- state 가 CursorPaginationFetchingMore 인 경우는 데이터를 더 로드해오는 상황이므로 분기 처리 해서 기존 데이터 + 새로 불러온 데이터를 합쳐준다.
+- 기존 데이터와 새로 불러온 데이터르 합칠때도 copyWith 함수를 사용한다.
+
+    ```
+       if (state is CursorPaginationFetchingMore) {
+            final pState = state as CursorPaginationFetchingMore;
+
+            // 기존 데이터에
+            // 새로운 데이터 추가
+            state = resp.copyWith(data: [
+                ...pState.data,
+                ...resp.data,
+            ]);
+        } 
+    ```
+</details>
