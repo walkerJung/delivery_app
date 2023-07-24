@@ -966,4 +966,13 @@
 - 이렇게 Provider 를 만들경우 Future builder 를 사용할 필요가 없다.
 </details>
 
+## 4. CursorPagination 상태 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- OOP 로 클래스 인스턴스에 상태를 추가하였다.
+- 조부모 > 부모 > 자식 클래스 의 형태일 경우에 자식 클래스는 조부모, 부모 모두를 상속받는다는 개념을 잊지말자.
+
+</details>
 
