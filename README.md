@@ -1045,3 +1045,21 @@
         }
     ```
 </details>
+
+## 8. Restaurant Pagination - 3
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- fetchMore 가 true 이고 3가지 로딩 상황 중 하나라도 true 일 경우 return 
+
+    ```
+        final isLoading = state is CursorPaginationLoading;
+        final isRefetching = state is CursorPaginationRefetching;
+        final isFetchingMore = state is CursorPaginationFetchingMore;
+
+        if (fetchMore && (isLoading || isRefetching || isFetchingMore)) {
+            return;
+        }
+    ```
+</details>
