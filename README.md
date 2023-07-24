@@ -1136,3 +1136,26 @@
         state = CursorPaginationError(message: '데이터를 가져오지 못했습니다.');
     ```
 </details>
+
+## 11. 완성된 Pagination 로직 실행해보기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- Scroll Controller 를 사용해서 fetchMore 관련 이벤트를 실행시켜서 무한스크롤을 구현하였다.
+- Scroll Controller 의 offset 과 controller.position 을 사용하여 데이터 불러오는 분기를 추가하였다.
+
+    ```
+        @override
+        void initState() {
+            super.initState();
+            controller.addListener(scrollListener);
+        }
+
+        void scrollListener() {
+            if (controller.offset > controller.position.maxScrollExtent - 300) {
+               ref.read(restaurantProvider.notifier).paginate(fetchMore: true);
+            }
+        }
+    ```
+</details>
