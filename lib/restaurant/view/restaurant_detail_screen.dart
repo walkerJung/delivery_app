@@ -1,5 +1,3 @@
-import 'package:delivery_app/common/const/data.dart';
-import 'package:delivery_app/common/dio/dio.dart';
 import 'package:delivery_app/common/layout/default_layout.dart';
 import 'package:delivery_app/product/component/product_card.dart';
 import 'package:delivery_app/restaurant/component/restaurant_card.dart';
@@ -68,21 +66,13 @@ class RestaurantDetailScreen extends ConsumerWidget {
     );
   }
 
-  Future<RestaurantDetailModel> getRestaurantDetail(WidgetRef ref) async {
-    final dio = ref.watch(dioProvider);
-
-    final repository =
-        RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant');
-
-    return repository.getRestaurantDetail(id: id);
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return DefaultLayout(
       title: '불타는 떡볶이',
       child: FutureBuilder<RestaurantDetailModel>(
-        future: getRestaurantDetail(ref),
+        future:
+            ref.watch(restaurantRepositoryProvider).getRestaurantDetail(id: id),
         builder: (_, AsyncSnapshot<RestaurantDetailModel> snapshot) {
           if (!snapshot.hasData) {
             return const Center(

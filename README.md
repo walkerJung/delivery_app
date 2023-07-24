@@ -899,3 +899,30 @@
 - ref.watch와 ref.read의 주요 차이점은 위젯이 프로바이더의 상태에 대해 "반응적 (build)"인지 아니면 "비반응적"인지를 결정한다는 것이다. 이에 따라 상황에 맞게 적절하게 선택하여 사용하면 된다.
 - 이렇게 하나로 묶은 Provider 를 사용할때 이점은 어떤 스크린 에서든 똑같은 인스턴스를 사용할수 있다는 점이다.
 </details>
+
+## 2. RestaurantRepositoryProvider 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- screen 에서 dio 를 호출해서 response 를 받아올 필요없이 repository 안에서 Provider 로 사용하여 로직을 분리하였다.
+
+    ```
+        <!-- repository 내 Provider -->
+
+        final restaurantRepositoryProvider = Provider<RestaurantRepository>((ref) {
+            final dio = ref.watch(dioProvider);
+            final repository = RestaurantRepository(
+                dio,
+                baseUrl: 'http://$ip/restaurant',
+            );
+
+            return repository;
+        });
+
+        <!-- UI screen -->
+        future: ref.watch(restaurantRepositoryProvider).getRestaurantDetail(id: id),
+    ```
+- 
+</details>
+
