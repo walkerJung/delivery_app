@@ -870,6 +870,31 @@
 <br>
 
 - retrofit 에서 만든 repository 는 항상 fromJson 까지 파싱해준다는걸 잊지말자.
-
 </details>
 
+<br><br>
+
+# 상태관리 프로젝트에 적용하기
+
+## 1. Dio에 Provider 적용하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 함수의 body 안에서 state 를 사용할땐 read 메서드를 사용한다.
+- Provider 안에서 다른 provider 를 사용할땐 Watch 메서드를 사용한다.
+- dio 와 secure storage 를 하나의 state 로 만들고 Provider 로 dio 와 secure storage 를 합쳐서 사용한다.
+
+    ```
+        final dioProvider = Provider<Dio>(
+            (ref) {
+                final dio = Dio();
+                final storage = ref.watch(secureStorageProvider);
+
+                dio.interceptors.add(CustomInterceptor(storage: storage));
+                return dio;
+            },
+        );
+    ```
+- ref.watch와 ref.read의 주요 차이점은 위젯이 프로바이더의 상태에 대해 "반응적 (build)"인지 아니면 "비반응적"인지를 결정한다는 것이다. 이에 따라 상황에 맞게 적절하게 선택하여 사용하면 된다.
+</details>
