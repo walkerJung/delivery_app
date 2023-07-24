@@ -1024,3 +1024,24 @@
         }
     ```
 </details>
+
+## 7. Restaurant Pagination - 2
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- hasMore 가 false 인 경우는 이미 데이터를 한번 불러왔다는 의미이다.
+- as 는 런타임 환경에서 타입이 100프로 맞을경우만 사용해야한다.
+
+    ```
+        // state 의 타입을 CursorPaginationBase 로 정해놨기때문에 as 를 써서 타입 확정
+
+        if (state is CursorPaginationModel && !forceRefetch) {
+            final pState = state as CursorPaginationModel;
+
+            if (!pState.meta.hasMore) {
+                return;
+            }
+        }
+    ```
+</details>
