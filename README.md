@@ -926,3 +926,44 @@
 - 
 </details>
 
+## 3. RestaurantProvider 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- restaurant provider 를 stateNotifier 로 만든다.
+- 생성자 메서드 뒤에 함수 바디를 추가하고 함수를 호출하면 인스턴스화 될때 바로 그 함수가 실행된다.
+
+    ```
+        class RestaurantStateNotifier extends StateNotifier<List<RestaurantModel>> {
+            final RestaurantRepository repository;
+
+            RestaurantStateNotifier({required this.repository}) : super([]) {
+                paginate();
+            }
+
+            paginate() async {
+                final resp = await repository.paginate();
+
+                state = resp.data;
+            }
+        }
+    ```
+- restaurant repository 도 Provider 로 만들어놨기 때문에 restaurantProvider 에서도 접근이 가능하다.
+
+    ```
+       final restaurantProvider =
+            StateNotifierProvider<RestaurantStateNotifier, List<RestaurantModel>>(
+            (ref) {
+                final repository = ref.watch(restaurantRepositoryProvider);
+                final notifier = RestaurantStateNotifier(repository: repository);
+
+                return notifier;
+            },
+        ); 
+    ```
+- 즉, restaurantProvider 는 restaurantRepositoryProvider 의 paginate 메서드를 사용하여 notifier 를 return 하고 있다.
+- 이렇게 Provider 를 만들경우 Future builder 를 사용할 필요가 없다.
+</details>
+
+
