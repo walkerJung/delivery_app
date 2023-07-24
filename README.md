@@ -976,3 +976,19 @@
 
 </details>
 
+## 5. Pagination Params 추가하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- const 로 생성자를 만들어야 const 인스턴스화가 가능하다.
+- Retrofit 을 사용할때 파라미터로 쿼리스트링을 받아야 할때 @Queries 어노테이션을 사용하면 된다.
+
+    ```
+        @GET('/')
+        @Headers({'accessToken': 'true'})
+        Future<CursorPaginationModel<RestaurantModel>> paginate({
+            @Queries() PaginationParams? paginationParams = const PaginationParams(),
+        });
+    ```
+</details>
