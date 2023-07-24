@@ -992,3 +992,35 @@
         });
     ```
 </details>
+
+## 6. Restaurant Pagination - 1
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- PaginationParams 같은 경우 인자값을 받아서 Json 으로 변환시켜서 보내야 하므로 toJson 이 필요하다.
+
+    ```
+        Map<String, dynamic> toJson() => _$PaginationParamsToJson(this);
+    ```
+- CursorPaginationBase 를 상속받고 있는 5가지 클래스가 있기때문에 RestaurantStateNotifier 의 state 타입은 CursorPaginationBase 가 되고 상속받고 있는 모든 클래스가 state 로 들어올수 있다.
+
+    ```
+        class RestaurantStateNotifier extends StateNotifier<CursorPaginationBase> {
+            final RestaurantRepository repository;
+
+            RestaurantStateNotifier({required this.repository})
+                : super(CursorPaginationLoading()) {
+                paginate();
+            }
+
+            paginate({
+                int fetchCount = 20,
+                bool fetchMore = false,
+                bool forceRefetch = false,
+            }) async {
+
+            }
+        }
+    ```
+</details>
