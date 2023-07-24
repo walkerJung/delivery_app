@@ -1107,3 +1107,32 @@
         } 
     ```
 </details>
+
+## 10. Restaurant Pagination - 5
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 데이터를 처음부터 가져오는 경우를 추가하였다.
+
+    ```
+       if (state is CursorPaginationModel && !forceRefetch) {
+          final pState = state as CursorPaginationModel;
+
+          state = CursorPaginationRefetching(
+            meta: pState.meta,
+            data: pState.data,
+          );
+        } 
+    ```
+- 데이터를 아예 처음 로드하는경우는 response 를 state 에 담아준다.
+
+    ```
+        state = resp;
+    ```
+- try catch 로 에러 핸들링을 하고 catch 에서는 Error 클래스를 사용한다.
+
+    ```
+        state = CursorPaginationError(message: '데이터를 가져오지 못했습니다.');
+    ```
+</details>
