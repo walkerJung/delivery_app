@@ -1354,3 +1354,13 @@
 </details>
 
 
+## 4. RatingModel 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- JsonSerializable 을 사용하면 편하게 fromJson, toJson 작업이 가능하다.
+- 파일 위에 part ''; 선언, class 위에 @JsonSerializable 어노테이션, 수정이 필요한 필드에 @JsonKey 어노테이션 을 사용하면 더 좋다.
+
+</details>
+
