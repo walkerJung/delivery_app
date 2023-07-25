@@ -1417,3 +1417,14 @@
 - Model 들은 일반화 한 Model 을 implemets 받아서 구현한다.
 - Repository 와 Model 모두를 사용하는 Provider 에서는 둘 다 제네릭 으로 extends 하여 사용한다.
 </details>
+
+## 9. Rating Pagination
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 위에서 만든 일반화 한 Provider 를 각각의 Provider 에 extends 시킨다.
+- 기존에 StateNotifier 을 extends 받고있었지만 일반화한 Provider 에서 extends 받고 있기 때문에 문제가 없다.
+- 기존에 Provider 에서 초기화 할때 paginate() 하던 부분을 일반화 한 Provider 에서 실행 시킨다.
+- 이렇게 일반화 되어있는 소스 구조로 개발을 진행할 경우 유지보수 시 수정사항 반영이 쉽다.
+</details>
