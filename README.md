@@ -1364,3 +1364,20 @@
 
 </details>
 
+## 5. RestaurantRatingRepository 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- Retrofit 을 사용하면 편하게 repository 생성할수 있다.
+- 파일위에 part ''; 선언, class 위에 @RestApi() 어노테이션, @메서드타입(), @Headers({}) 를 사용하여 구현한다.
+- dio 의 Headers 는 hide 시키고 Retrofit 의 Headers 를 사용하고, Dio Provider 에서 전달받은 Headers 를 확인하여 Dio Headers 설정을 할수 있다.
+
+    ```
+        import 'package:dio/dio.dart' hide Headers;
+
+        @Headers({'accessToken': 'true'})    
+    ```
+</details>
+
+
