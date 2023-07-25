@@ -1256,3 +1256,23 @@
         }
     ```
 </details>
+
+## 3. Hero 위젯
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- Hero 위젯을 사용하면 같은 tag 값을 가진 위젯의 이동이 굉장히 자연스러워 지도록 할수 있다.
+- Hero 위젯 효과를 주고싶은 부분을 Hero 위젯으로 감싸고 공통으로 사용할수 있는 tag 값을 전달해준다.
+
+    ```
+        Hero(
+            tag: ObjectKey(heroKey),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(isDetail ? 0 : 12),
+                child: image,
+            ),
+        ),
+    ```
+</details>
+
