@@ -1437,3 +1437,16 @@
 - fromModel 메서드로 UI 랜더링을 실행한다.
 - 일반화 한 Provider 를 사용해서 pagination 을 편하게 사용할수 있다.
 </details>
+
+## 11. RatingPagination FetchMore 적용하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- scroll 이벤트 역시 paginate 와 관련있는 이벤트로 일반화 하여 사용할수 있다.
+- scroll 이벤트가 필요한 리스트 모두 Pagination Provider 를 확장하고 있기 때문에 파라미터로 전달할수 있다.
+- 최소 두번 이상 중복되는 코드가 있다면 일반화 할수 있는 방법을 생각해보는게 좋다.
+- OOP 는 일반화가 잘되면 될수록 사용하기 편하다.
+</details>
+
+

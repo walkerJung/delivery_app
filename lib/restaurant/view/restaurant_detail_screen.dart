@@ -1,5 +1,6 @@
 import 'package:delivery_app/common/layout/default_layout.dart';
 import 'package:delivery_app/common/model/cursor_pagination_model.dart';
+import 'package:delivery_app/common/utils/pagination_utils.dart';
 import 'package:delivery_app/product/component/product_card.dart';
 import 'package:delivery_app/rating/component/rating_card.dart';
 import 'package:delivery_app/rating/model/rating_model.dart';
@@ -27,11 +28,21 @@ class RestaurantDetailScreen extends ConsumerStatefulWidget {
 
 class _RestaurantDetailScreenState
     extends ConsumerState<RestaurantDetailScreen> {
+  final ScrollController controller = ScrollController();
+
   @override
   void initState() {
     super.initState();
 
     ref.read(restaurantProvider.notifier).getDetail(id: widget.id);
+    controller.addListener(listener);
+  }
+
+  void listener() {
+    PaginationUtils.paginate(
+      controller: controller,
+      provider: ref.read(restaurantRatingProvider(widget.id).notifier),
+    );
   }
 
   SliverPadding renderRatings({
@@ -145,6 +156,7 @@ class _RestaurantDetailScreenState
     return DefaultLayout(
       title: '불타는 떡볶이',
       child: CustomScrollView(
+        controller: controller,
         slivers: [
           renderTop(
             model: state,
