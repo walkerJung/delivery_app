@@ -1276,3 +1276,13 @@
     ```
 </details>
 
+## 4. Skeleton 사용하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 스켈레톤 UI 를 데이터 로드 하는동안 보여주면 사용자 경험이 좋아진다.
+- https://pub.dev/packages/skeletons
+</details>
+
+
