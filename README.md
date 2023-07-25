@@ -1160,7 +1160,7 @@
     ```
 </details>
 
-## 11. FetchMore 로딩 UI 작업하기
+## 12. FetchMore 로딩 UI 작업하기
 <details>
 <summary> 내용 보기</summary>
 <br>
@@ -1188,5 +1188,33 @@
           }
 
         ...
+    ```
+</details>
+
+<br><br>
+
+# 캐시관리 및 공유하기
+
+## 1. Cache에서 데이터 가져오기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 데이터의 변경주기가 긴 데이터일수록 캐시처리를 해줘야 한다.
+- 상세보기 Provider 를 만들때 이미 만들어진 리스트를 state 로 가지고와서 family 를 사용해서 만들면 캐시처리가 쉽게 된다.
+
+    ```
+        final restaurantDetailProvider = Provider.family<RestaurantModel?, String>((
+            ref,
+            id,
+        ) {
+            <!-- list state 를 참조하여 detail provider 생성 -->
+
+            final state = ref.watch(restaurantProvider);
+            if (state is! CursorPaginationModel<RestaurantModel>) {
+                return null;
+            }
+            return state.data.firstWhere((element) => element.id == id);
+        });
     ```
 </details>
