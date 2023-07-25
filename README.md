@@ -1407,5 +1407,13 @@
 - 각각의 repository 에서 추상화 클래스를 implemets 받아서 body 를 구현한다. (body 는 Retrofit 으로 생성된 메서드)
 </details>
 
+## 8. Pagination 모델 일반화하기
+<details>
+<summary> 내용 보기</summary>
+<br>
 
-
+- 모든 Model 에서 id 값이 꼭 존재하기 때문에 이부분을 추상화 클래스로 만들어서 일반화 할수 있다.
+- Repository 들은 일반화 한 Repository 를 implements 받아서 구현한다.
+- Model 들은 일반화 한 Model 을 implemets 받아서 구현한다.
+- Repository 와 Model 모두를 사용하는 Provider 에서는 둘 다 제네릭 으로 extends 하여 사용한다.
+</details>
