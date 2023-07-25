@@ -1218,3 +1218,41 @@
         });
     ```
 </details>
+
+## 2. RestaurantDetail 캐싱하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 캐싱은 기본적으로 Provider 를 사용할때 가능하다.
+- detail provider 는 기존 list provider 에서 id 값으로 찾아서 만들었다.
+- 비슷한 방법으로 상세정보에 들어갈 추가정보들 또한 list provider 를 copyWith 해서 데이터를 넣어주는 방식으로 구현하였다.
+
+    ```
+        getDetail({
+            required String id,
+        }) async {
+            // 아직 데이터가 하나도 없는 상태라면 (state != CursorPaginationModel)
+            // 데이터를 가져오는 시도를 한다.
+            if (state is! CursorPaginationModel) {
+            await paginate();
+            }
+
+            // state 가 CursorPaginationModel 이 아닐때 그냥 리턴
+            if (state is! CursorPaginationModel) {
+            return;
+            }
+
+            final pState = state as CursorPaginationModel;
+
+            final resp = await repository.getRestaurantDetail(id: id);
+
+            <!-- 기존 리스트 state 에 copyWith 로 detail response 를 추가 -->
+            state = pState.copyWith(
+                data: pState.data
+                    .map<RestaurantModel>((e) => e.id == id ? resp : e)
+                    .toList(),
+            );
+        }
+    ```
+</details>

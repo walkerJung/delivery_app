@@ -7,13 +7,27 @@ import 'package:delivery_app/restaurant/provider/restaurant_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RestaurantDetailScreen extends ConsumerWidget {
+class RestaurantDetailScreen extends ConsumerStatefulWidget {
   final String id;
 
   const RestaurantDetailScreen({
     super.key,
     required this.id,
   });
+
+  @override
+  ConsumerState<RestaurantDetailScreen> createState() =>
+      _RestaurantDetailScreenState();
+}
+
+class _RestaurantDetailScreenState
+    extends ConsumerState<RestaurantDetailScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    ref.read(restaurantProvider.notifier).getDetail(id: widget.id);
+  }
 
   SliverToBoxAdapter renderTop({required RestaurantModel model}) {
     return SliverToBoxAdapter(
@@ -68,8 +82,8 @@ class RestaurantDetailScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(restaurantDetailProvider(id));
+  Widget build(BuildContext context) {
+    final state = ref.watch(restaurantDetailProvider(widget.id));
 
     if (state == null) {
       return const DefaultLayout(
@@ -86,10 +100,11 @@ class RestaurantDetailScreen extends ConsumerWidget {
           renderTop(
             model: state,
           ),
-          // renderLabel(),
-          // renderProducts(
-          //   products: snapshot.data!.products,
-          // ),
+          if (state is RestaurantDetailModel) renderLabel(),
+          if (state is RestaurantDetailModel)
+            renderProducts(
+              products: state.products,
+            ),
         ],
       ),
     );
