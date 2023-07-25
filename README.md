@@ -1316,4 +1316,41 @@
     ```
 </details>
 
+## 2. RatingCardBody 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- Flexible 위젯 안에서 글자가 width 값을 초과하면 다음줄로 넘어간다.
+</details>
+
+## 3. RatingCardImage 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- import 'package:collection/collection.dart'; 를 가지고오면 mapIndexed 를 사용할수 있다.
+- map() 의 return 값은 이터러블 이므로 항상 toList() 를 해줘야 한다.
+- index 를 사용해서 마지막 요소에는 padding 을 안넣어줄수 있다.
+
+    ```
+        padding: EdgeInsets.only(right: index == images.length - 1 ? 0 : 16),        
+    ```
+- ListView 의 scrollDirection 으로 스크롤 방향을 바꿀수 있다.
+
+    ```
+        scrollDirection: Axis.horizontal,
+    ```
+- flutter 는 컨텐츠가 쌓이는 방향에 따라 높이 또는 넓이만 지정되므로, 자동 지정이 안되는 부분은 잡아줘야 한다.
+
+    ```
+        <!-- ListView 의 방향이 가로 이므로 높이 지정 -->
+        if (images.isNotEmpty)
+          SizedBox(
+            height: 100,
+            child: _Images(images: images),
+          ),
+    ```
+</details>
+
 
