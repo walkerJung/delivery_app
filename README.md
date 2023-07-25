@@ -1428,3 +1428,12 @@
 - 기존에 Provider 에서 초기화 할때 paginate() 하던 부분을 일반화 한 Provider 에서 실행 시킨다.
 - 이렇게 일반화 되어있는 소스 구조로 개발을 진행할 경우 유지보수 시 수정사항 반영이 쉽다.
 </details>
+
+## 10. RatingsPagination 렌더링하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- fromModel 메서드로 UI 랜더링을 실행한다.
+- 일반화 한 Provider 를 사용해서 pagination 을 편하게 사용할수 있다.
+</details>

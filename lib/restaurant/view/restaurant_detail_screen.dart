@@ -1,6 +1,8 @@
 import 'package:delivery_app/common/layout/default_layout.dart';
+import 'package:delivery_app/common/model/cursor_pagination_model.dart';
 import 'package:delivery_app/product/component/product_card.dart';
 import 'package:delivery_app/rating/component/rating_card.dart';
+import 'package:delivery_app/rating/model/rating_model.dart';
 import 'package:delivery_app/restaurant/component/restaurant_card.dart';
 import 'package:delivery_app/restaurant/model/restaurant_detail_model.dart';
 import 'package:delivery_app/restaurant/model/restaurant_model.dart';
@@ -30,6 +32,25 @@ class _RestaurantDetailScreenState
     super.initState();
 
     ref.read(restaurantProvider.notifier).getDetail(id: widget.id);
+  }
+
+  SliverPadding renderRatings({
+    required List<RatingModel> models,
+  }) {
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (_, index) => Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: RatingCard.fromModel(
+              model: models[index],
+            ),
+          ),
+          childCount: models.length,
+        ),
+      ),
+    );
   }
 
   SliverPadding renderLoading() {
@@ -112,7 +133,7 @@ class _RestaurantDetailScreenState
   Widget build(BuildContext context) {
     final state = ref.watch(restaurantDetailProvider(widget.id));
     final ratingsState = ref.watch(restaurantRatingProvider(widget.id));
-    print(ratingsState);
+
     if (state == null) {
       return const DefaultLayout(
         child: Center(
@@ -132,18 +153,8 @@ class _RestaurantDetailScreenState
           if (state is RestaurantDetailModel) renderLabel(),
           if (state is RestaurantDetailModel)
             renderProducts(products: state.products),
-          const SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            sliver: SliverToBoxAdapter(
-              child: RatingCard(
-                avatarImage: AssetImage('asset/img/logo/codefactory_logo.png'),
-                images: [],
-                rating: 4,
-                email: 'jc@codefactory.ai',
-                content: '맛있습니다!!',
-              ),
-            ),
-          ),
+          if (ratingsState is CursorPaginationModel<RatingModel>)
+            renderRatings(models: ratingsState.data),
         ],
       ),
     );
