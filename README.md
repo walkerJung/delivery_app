@@ -1380,4 +1380,22 @@
     ```
 </details>
 
+## 6. RestaurantRatingProvider 초기작업
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- repository 는 dio 를 사용하여 repository provider 를 만든다.
+- repository provider 를 참조하는 provider 를 만든다.
+- 전체적인 작업 순서는 동일하다.
+
+    ```
+        // 1. Model 구성 (JsonSerializable)
+        // 2. Repository + Repository Provider 구성 (Retrofit + Dio Provider)
+        // 3. Repository Provider 를 참조하는 Provider 구성 (비즈니스로직)
+    ```
+- 확장성 있는 class 를 만들어두면 두고두고 편하다.
+</details>
+
+
 
