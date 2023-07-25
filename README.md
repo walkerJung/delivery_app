@@ -1397,5 +1397,15 @@
 - 확장성 있는 class 를 만들어두면 두고두고 편하다.
 </details>
 
+## 7. Interface 로 Repository 일반화하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- paginate 관련 로직이 중복적으로 사용되기 때문에 인터페이스를 만들어서 repository 를 변수처럼 받아서 사용할수 있도록 변경하였다.
+- 제네릭 에는 implements 를 사용할수 없으므로 extends 로 추상화 클래스를 확장하여 사용한다.
+- 각각의 repository 에서 추상화 클래스를 implemets 받아서 body 를 구현한다. (body 는 Retrofit 으로 생성된 메서드)
+</details>
+
 
 
