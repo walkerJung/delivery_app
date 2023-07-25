@@ -1285,4 +1285,35 @@
 - https://pub.dev/packages/skeletons
 </details>
 
+<br><br>
+
+# Pagination 일반화하기
+
+## 1. RatingCardHeader 만들기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 별점 관련 UI Card 를 _Header, _Body, _Image 로 나누어 구현하였다.
+- ImageProvider 는 주로 assetimage 나 networkimage 와 관련이 있고 CircleAvatar 의 backgroundImage 형식이다.
+
+    ```
+        CircleAvatar(
+          backgroundImage: avatarImage, // ImageProvider type
+          radius: 12,
+        ),
+    ```
+- 별점을 구현할때 List.generate 의 index 와 전달받은 별점을 비교해서 별점이 더 클때 Icons.star 를 return 하는 방법으로 구현하였다.
+
+    ```
+        ...List.generate(
+          5,
+          (index) => Icon(
+            index < rating ? Icons.star : Icons.star_border_outlined,
+            color: PRIMARY_COLOR,
+          ),
+        ),
+    ```
+</details>
+
 
