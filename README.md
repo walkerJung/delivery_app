@@ -1544,7 +1544,7 @@
 <summary> 내용 보기</summary>
 <br>
 
-- 
+- ProductCard.fromModel 로 렌더링 하던 부분을 2가지로 변경하였다.
 
 <details>
 
