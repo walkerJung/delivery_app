@@ -1477,8 +1477,66 @@
 <summary> 내용 보기</summary>
 <br>
 
-- 
+- 페이지네이션 리스트는 공용으로 사용하기 때문에 common/compone 에 파일을 생성한다.
+- 리스너 ( 스크롤 이벤트 )를 사용하기위에 STF 로 만든다.
+- 일반화 하려는데 필요한 기능은 페이지네이션과 스크롤 이벤트 두가지 이다.
 
+    ```
+        <!-- 스크롤 이벤트 관련 로직 -->
+
+        final ScrollController controller = ScrollController();
+
+        @override
+        void initState() {
+            super.initState();
+
+            controller.addListener(listener);
+        }
+
+        void listener() {
+            PaginationUtils.paginate(
+                controller: controller, provider: ref.read(widget.provider.notifier));
+        }
+
+        @override
+        void dispose() {
+            controller.removeListener(listener);
+            super.dispose();
+        }
+
+        <!-- 페이지네이션 관련 Provider -->
+
+        final StateNotifierProvider<PaginationProvider, CursorPaginationBase> provider;
+
+    ```
+- Widget 을 return 하는 itemBuilder 함수를 typedef 로 정의한다.
+
+    ```
+        typedef PaginationWidgetBuilder<T extends IModelWithId> = Widget Function(BuildContext context, int index, T model);
+    ```
+- 사용하려는 스크린에서 PaginationListView 를 호출하여 사용할 provider 와 UI 에 보여줄 Widget 을 전달한다.
+
+    ```
+        PaginationListView(
+            itemBuilder: <RestaurantModel>(_, index, model) {
+                return GestureDetector(
+                onTap: () {
+                    Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (_) => RestaurantDetailScreen(
+                        id: model.id,
+                        ),
+                    ),
+                    );
+                },
+                child: RestaurantCard.fromModel(
+                    model: model,
+                ),
+                );
+            },
+            provider: restaurantProvider,
+        )
+    ```
 <details>
 
 ## 3. Product Tab Pagination
