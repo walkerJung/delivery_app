@@ -1449,4 +1449,55 @@
 - OOP 는 일반화가 잘되면 될수록 사용하기 편하다.
 </details>
 
+<br><br>
+
+# 고급 캐시관리
+
+## 1. Product Pagination 세팅하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- Pagination 을 하기위해 IModelWithId 를 implements 받는다.
+- 비동기 통신이며 CursorPaginationModel<ProductModel> 형식을 리턴하는 repository 를 만든다.
+- paginationParams 를 받을수 있고, 없다면 default 로 PaginationParams 전달한다.
+
+    ```
+        Future<CursorPaginationModel<ProductModel>> paginate({
+            @Queries() PaginationParams? paginationParams = const PaginationParams(),
+        });
+    ```
+- PaginationProvider 는 2개의 제네릭을 받는데 하나는 IModelWithId, 다른 하나는 IBasePaginationRepository 이다.
+- 즉, 전달받는 Model 과 Repository 만 있으면 페이지네이션이 기존 소스로 구현이 가능하도록 설계되어 있다.
+
+<details>
+
+## 2. PaginationListView 위젯 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 
+
+<details>
+
+## 3. Product Tab Pagination
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 
+
+<details>
+
+## 4. 존재하지않는 데이터 캐시에 입력하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 
+
+<details>
+
+
 
