@@ -1553,8 +1553,28 @@
 <summary> 내용 보기</summary>
 <br>
 
-- 
+- 기존에 식당 정보를 20개만 불러오고 있었고, detail 정보도 20개의 식당정보만큼만 불러오고 있었다.
+- 음식 탭에서 기존 20개의 식당정보에 포함되어 있지 않은 음식을 눌러서 detail 스크린으로 이동하면 에러가 발생하므로, 아래와 같은 로직을 provider 에 추가하였다.
 
+    ```
+        <!-- 선택한 아이디값의 식당정보가 없을경우 새로 추가해주는 로직 -->
+
+        if (pState.data.where((e) => e.id == id).isEmpty) {
+            state = pState.copyWith(
+                data: <RestaurantModel>[
+                    ...pState.data,
+                    resp,
+                ],
+            );
+        } else {
+            state = pState.copyWith(
+                data: pState.data
+                    .map<RestaurantModel>((e) => e.id == id ? resp : e)
+                    .toList(),
+            );
+        }
+    ```
+- import 'package:collection/collection.dart'; 를 import 하면 firstWhereOrNull 을 사용할수 있고, 이를 이용해서 UI 쪽에서 null 이 넘어올때의 처리를 할수 있다.
 <details>
 
 
