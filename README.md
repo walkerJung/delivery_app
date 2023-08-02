@@ -1470,7 +1470,7 @@
 - PaginationProvider 는 2개의 제네릭을 받는데 하나는 IModelWithId, 다른 하나는 IBasePaginationRepository 이다.
 - 즉, 전달받는 Model 과 Repository 만 있으면 페이지네이션이 기존 소스로 구현이 가능하도록 설계되어 있다.
 
-<details>
+</details>
 
 ## 2. PaginationListView 위젯 작업하기
 <details>
@@ -1537,7 +1537,7 @@
             provider: restaurantProvider,
         )
     ```
-<details>
+</details>
 
 ## 3. Product Tab Pagination
 <details>
@@ -1546,7 +1546,7 @@
 
 - ProductCard.fromModel 로 렌더링 하던 부분을 2가지로 변경하였다.
 
-<details>
+</details>
 
 ## 4. 존재하지않는 데이터 캐시에 입력하기
 <details>
@@ -1575,7 +1575,98 @@
         }
     ```
 - import 'package:collection/collection.dart'; 를 import 하면 firstWhereOrNull 을 사용할수 있고, 이를 이용해서 UI 쪽에서 null 이 넘어올때의 처리를 할수 있다.
+</details>
+
+<br><br>
+
+# GoRouter 프로젝트에 적용하기
+
+## 1. UserMeRepository 생성하기
 <details>
+<summary> 내용 보기</summary>
+<br>
 
+- 현재 토큰이 유효하면 유저정보를 가지고오고 유저정보가 있다면 로그인한 상태이다.
+- 토큰 정보로 유저정보를 받아오는 repository 를 만들고 provider 로 만들어줬다.
+</details>
 
+## 2. Get Me API 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
 
+- 
+
+</details>
+
+## 3. Get Me API 보완
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 
+
+</details>
+
+## 4. Login 과 Token Refresh Repository
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 
+
+</details>
+
+## 5. UserMeProvider 마무리하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 
+
+</details>
+
+## 6. AuthProvider 작업하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 
+
+</details>
+
+## 7. GoRouter 적용하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 
+
+</details>
+
+## 8. Authentication 마무리하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 
+
+</details>
+
+## 9. 일반 Navigation 에서 GoRouter 로 전환하기
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 
+
+</details>
+
+## 10. RefreshToken 만료되면 로그아웃
+<details>
+<summary> 내용 보기</summary>
+<br>
+
+- 
+
+</details>
