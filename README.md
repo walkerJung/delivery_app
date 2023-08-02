@@ -1693,7 +1693,7 @@
 <summary> 내용 보기</summary>
 <br>
 
-- 
+- 기존에 splash screen 에서 담당하고 있던 로직을 AuthProvider 내부에 redirectLogin 메서드에 추가했다.
 
 </details>
 
