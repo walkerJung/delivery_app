@@ -1654,7 +1654,7 @@
 <summary> 내용 보기</summary>
 <br>
 
-- 
+- refreshToken 과 accessToken 이 없는경우 state = null 을 넣는다.
 
 </details>
 
