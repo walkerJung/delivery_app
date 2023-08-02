@@ -1711,8 +1711,36 @@
 <summary> 내용 보기</summary>
 <br>
 
-- 
+- 인증과 관련된 것들을 하나의 Provider 로 묶어서 상태로 관리한다.
+- GoRouter 의 redirect 속성을 사용해서 라우터 이동시 마다 redirectLogic 을 실행시켜서 인증/인가 에 필요한 로직을 실행시킨다.
 
+    ```
+        return GoRouter(
+            routes: provider.routes,
+            initialLocation: '/splash',
+            refreshListenable: provider,
+            redirect: provider.redirectLogic,
+        );
+    ```
+- 이렇게 만든 GoRouter 도 하나의 Provider 로 제공해서 사용한다.
+
+    ```
+        class _App extends ConsumerWidget {
+            const _App();
+
+            @override
+            Widget build(BuildContext context, WidgetRef ref) {
+                final router = ref.watch(routerProvider);
+
+                return MaterialApp.router(
+                    theme: ThemeData(
+                        fontFamily: 'NotoSans',
+                    ),
+                    routerConfig: router,
+                );
+            }
+        }
+    ```
 </details>
 
 ## 9. 일반 Navigation 에서 GoRouter 로 전환하기

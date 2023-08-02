@@ -1,13 +1,8 @@
-import 'dart:convert';
-
 import 'package:delivery_app/common/component/custom_text_form_field.dart';
 import 'package:delivery_app/common/const/colors.dart';
-import 'package:delivery_app/common/const/data.dart';
-import 'package:delivery_app/common/dio/dio.dart';
 import 'package:delivery_app/common/layout/default_layout.dart';
-import 'package:delivery_app/common/secure_storage/secure_storage.dart';
-import 'package:delivery_app/common/view/root_tab.dart';
-import 'package:dio/dio.dart';
+import 'package:delivery_app/user/model/user_model.dart';
+import 'package:delivery_app/user/provider/user_me_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,7 +20,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final dio = ref.watch(dioProvider);
+    final state = ref.watch(userMeProvider);
 
     return DefaultLayout(
       child: SingleChildScrollView(
@@ -63,34 +58,40 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   height: 16,
                 ),
                 ElevatedButton(
-                  onPressed: () async {
-                    final rawString = '$username:$password';
-                    Codec<String, String> stringToBase64 = utf8.fuse(base64);
-                    String token = stringToBase64.encode(rawString);
+                  onPressed: state is UserModelLoading
+                      ? null
+                      : () async {
+                          ref.read(userMeProvider.notifier).login(
+                                username: username,
+                                password: password,
+                              );
+                          // final rawString = '$username:$password';
+                          // Codec<String, String> stringToBase64 = utf8.fuse(base64);
+                          // String token = stringToBase64.encode(rawString);
 
-                    final resp = await dio.post(
-                      'http://$ip/auth/login',
-                      options: Options(
-                        headers: {'authorization': 'Basic $token'},
-                      ),
-                    );
+                          // final resp = await dio.post(
+                          //   'http://$ip/auth/login',
+                          //   options: Options(
+                          //     headers: {'authorization': 'Basic $token'},
+                          //   ),
+                          // );
 
-                    final refreshToken = resp.data['refreshToken'];
-                    final accessToken = resp.data['accessToken'];
+                          // final refreshToken = resp.data['refreshToken'];
+                          // final accessToken = resp.data['accessToken'];
 
-                    final storage = ref.read(secureStorageProvider);
+                          // final storage = ref.read(secureStorageProvider);
 
-                    await storage.write(
-                        key: REFRESH_TOKEN_KEY, value: refreshToken);
-                    await storage.write(
-                        key: ACCESS_TOKEN_KEY, value: accessToken);
+                          // await storage.write(
+                          //     key: REFRESH_TOKEN_KEY, value: refreshToken);
+                          // await storage.write(
+                          //     key: ACCESS_TOKEN_KEY, value: accessToken);
 
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const RootTab(),
-                      ),
-                    );
-                  },
+                          // Navigator.of(context).push(
+                          //   MaterialPageRoute(
+                          //     builder: (_) => const RootTab(),
+                          //   ),
+                          // );
+                        },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: PRIMARY_COLOR,
                   ),

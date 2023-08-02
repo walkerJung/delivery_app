@@ -25,7 +25,7 @@ class AuthProvider extends ChangeNotifier {
 
   List<GoRoute> get routes => [
         GoRoute(
-          path: '/restaurant',
+          path: '/',
           name: RootTab.routeName,
           builder: (_, __) => const RootTab(),
           routes: [
