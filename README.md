@@ -1595,7 +1595,57 @@
 <summary> 내용 보기</summary>
 <br>
 
-- 
+- getMe() 는 기본적으로 token 을 가지고 있어야 하기 때문에 분기처리를 위해 토큰 확인을 먼저 한다.
+- UserModelBase 를 만들어서 UserModel, UserModelLoading, UserModelError 를 자식으로 둔다.
+- UserMeStateNotifier 에서는 UserModelBase 를 state 로 관리한다.
+- getMe() 의 return type 은 UserModel 이므로 state 에 할당할수 있다.
+
+    ```
+        <!-- user_model.dart -->
+
+        abstract class UserModelBase {}
+
+        class UserModelLoading extends UserModelBase {}
+
+        class UserModelError extends UserModelBase {
+            final String message;
+
+            UserModelError({
+                required this.message,
+            });
+        }
+
+        class UserModel extends UserModelBase {
+            ...            
+        }
+
+        <!-- user_me_provider.dart -->
+
+        class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
+            final UserMeRepository repository;
+            final FlutterSecureStorage storage;
+
+            UserMeStateNotifier({
+                required this.storage,
+                required this.repository,
+            }) : super(UserModelLoading()) {
+                getMe();
+            }
+
+            Future<void> getMe() async {
+                final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
+                final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+
+                if (refreshToken == null || accessToken == null) {
+                    return;
+                }
+
+                final resp = await repository.getMe();
+
+                state = resp;
+            }
+        }
+    ```
 
 </details>
 
