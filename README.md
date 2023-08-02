@@ -1663,8 +1663,8 @@
 <summary> 내용 보기</summary>
 <br>
 
-- 
-
+- LoginResponse Class 와 TokenResponse Class 를 JsonSerializable 로 만들었다.
+- auth_provider 에서 login() 과 token() 메서드에서 각각의 class 를 리턴타입으로 받는다.
 </details>
 
 ## 5. UserMeProvider 마무리하기
