@@ -1672,8 +1672,20 @@
 <summary> 내용 보기</summary>
 <br>
 
-- 
+- login 과 logout 메서드를 추가하였다.
+- login 시작시 state = UserModelLoading(); 으로 설정해준다.
+- authRepository.login() 으로 로그인을 시도하고 결과 값으로 storage 에 토큰을 저장해준다.
+- 토큰 세팅이 완료 되었다면 user repository 의 getMe() 를 호출해서 유저정보를 state 에 넣어준다.
+- logout 은 state( 유저정보 ) 를 null 로 바꿔주고, storage 값들을 지워준다.
 
+    ```
+        <!-- 두 작업을 하나의 비동기 요청으로 변경 -->
+
+        await Future.wait([
+            storage.delete(key: REFRESH_TOKEN_KEY),
+            storage.delete(key: ACCESS_TOKEN_KEY)
+        ]);
+    ```
 </details>
 
 ## 6. AuthProvider 작업하기
