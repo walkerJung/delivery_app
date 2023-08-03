@@ -49,6 +49,10 @@ class AuthProvider extends ChangeNotifier {
         ),
       ];
 
+  logout() {
+    ref.read(authProvider.notifier).logout();
+  }
+
   // Splash Screen
   // 앱을 시작했을때
   // 토큰이 존재하는지 확인하고

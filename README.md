@@ -1757,6 +1757,5 @@
 <summary> 내용 보기</summary>
 <br>
 
-- 
-
+- 각각의 Provider 끼리 종속 여부가 있다면, 상위에 하나 더 Provider 를 만들어서 사용해야한다.
 </details>
