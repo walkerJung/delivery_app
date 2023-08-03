@@ -1748,8 +1748,8 @@
 <summary> 내용 보기</summary>
 <br>
 
-- 
-
+- 일반 Navigation 으로 스크린 이동하던 부분을 GoRouter 로 변경하였다.
+- goNamed 로 화면 이동할때 전달해야할 인자값이 있다면 pathParameters 를 사용하여 주고받으면 된다.
 </details>
 
 ## 10. RefreshToken 만료되면 로그아웃
